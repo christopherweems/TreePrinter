@@ -8,10 +8,12 @@
 
 /// Objects that are `TreeRepresentable` can be printed using `TreePrinter`
 public protocol TreeRepresentable {
+    associatedtype Subnodes : Collection where Subnodes.Element == Self
     
     /// Gets the name of this node
     var name: String { get }
     
     /// Gets the subnodes of this node
-    var subnodes: [Self] { get }
+    var subnodes: Subnodes { get }
+    
 }

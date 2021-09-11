@@ -10,7 +10,7 @@
 public class TreePrinter {
     
     /// A set of options to configure how a tree is printed
-    public struct TreePrinterOptions {
+    public struct Options {
         public let spacesPerDepth: Int
         public let spacer: String
         public let verticalLine: String
@@ -49,13 +49,13 @@ public class TreePrinter {
         
         /// Alternative defaults that uses characters that are easily
         /// typed on a standard US keyboard.
-        public static var alternateDefaults: TreePrinterOptions {
-            TreePrinterOptions(spacesPerDepth: 5,
-                               spacer: " ",
-                               verticalLine: "|",
-                               intermediateConnector: "+",
-                               finalConnector: "`",
-                               connectorSuffix: "-- ")
+        public static var alternateDefaults: Options {
+            .init(spacesPerDepth: 5,
+                  spacer: " ",
+                  verticalLine: "|",
+                  intermediateConnector: "+",
+                  finalConnector: "`",
+                  connectorSuffix: "-- ")
         }
     }
     
@@ -64,7 +64,7 @@ public class TreePrinter {
     ///   - root: Root of the tree; must conform to `TreeReprsentable`
     ///   - options: Optional set of options to configure how the output looks
     public static func printTree<Node>(root: Node,
-                                       options: TreePrinterOptions = TreePrinterOptions()) -> String where Node: TreeRepresentable
+                                       options: Options = .init()) -> String where Node: TreeRepresentable
     {
         return printNode(node: root,
                          depth: 0,
@@ -81,7 +81,7 @@ public class TreePrinter {
     private static func printNode<Node>(node: Node,
                                         depth: Int,
                                         depthsFinished: Set<Int>,
-                                        options: TreePrinterOptions) -> String where Node: TreeRepresentable
+                                        options: Options) -> String where Node: TreeRepresentable
     {
         var retVal = ""
         // Prefix the appropriate spaces/pipes.
@@ -131,3 +131,11 @@ public class TreePrinter {
     }
 }
 
+
+// MARK: - Deprecations
+
+extension TreePrinter {
+    @available(*, deprecated, renamed: "Options")
+    public typealias TreePrinterOptions = Options
+    
+}
